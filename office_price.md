@@ -3,20 +3,19 @@ How to win a marathon: Linear model with R
 
 ![Caption for the picture.](marathon.jpg)
 
-\[Photo credit\]
-(<https://miro.medium.com/max/620/0*F_jy9bXTi5q80nDe.jpg>)
+[Photo credit](https://miro.medium.com/max/620/0*F_jy9bXTi5q80nDe.jpg)
 
 I love Marathons, they are good ways to raise money for good causes and
 to get healthier while enjoying making more friends. Sadly, due to
 Covid19 many marathons have been suspended or canceled. As a way to
-remember this great activity, I am going to use the marathon data I
-attached to this document, will try to answer the question, how the
-training miles affect the speed of the runners in the marathon. Since
-the speed is not readily available, I will calculate form the distance
-and time column..
+remember this great activity, I am going to use a marathon data trying
+to answer the following question, how the training miles affect the
+speed of the runners in the marathon. Since the speed is not readily
+available in the data set, I will calculate form the distance and time
+column.
 
 ``` r
-# let's first read at the data and lookt at it's head
+# let's first take a look a the original data 
 marathon <- read_csv("marathon.csv", col_types = cols(
   id = col_factor(),
   female = col_factor(),
