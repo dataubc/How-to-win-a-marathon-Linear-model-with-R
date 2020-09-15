@@ -1,0 +1,67 @@
+---
+title: "The faster runner in a Marathon"
+output:
+  github_document:
+    pandoc_args: --webtex
+---
+
+```{r setup, include = FALSE, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(infer)
+library(broom)
+library(rsample)
+```
+
+
+![Caption for the picture.](marathon.jpg)
+
+[Photo credit] (https://miro.medium.com/max/620/0*F_jy9bXTi5q80nDe.jpg)
+
+
+I love Marathons, they are good ways to raise money for good causes and to get healthier while enjoying making more friends. Sadly, due to Covid19 many marathons have been suspended or canceled. As a way to remember this great activity, I am going to use the marathon data I attached to this document, will try to answer the question, how the training miles affect the speed of the runners in the marathon. Since the speed is not readily available, I will calculate form the distance and time column..
+
+```{r message = FALSE}
+# let's first read at the data and lookt at it's head
+marathon <- read_csv("marathon.csv", col_types = cols(
+  id = col_factor(),
+  female = col_factor(),
+  footwear = col_factor(),
+  group = col_factor(),
+  injury = col_factor()
+))
+marathon
+```
+>  Well, there are many columns in the data set. But we are only interested in learning how training miles before the marathon affects the speed of the runners so let's us do some wrangling
+
+```{r}
+# we will filter only those who completed the marathon and then calculate the speed
+marathon_speed <- marathon %>% filter(completed_marathon == 1) %>%
+  mutate(speed = distance / time,
+         id = factor(id),) %>%
+  select(-c(completed_marathon,
+            distance,age,bmi,
+            time,female,footwear,group))
+marathon_speed
+```
+
+```{r}
+# now let's visualize the relationship between speed and training miles and injury
+plot_speed <- marathon_speed %>% ggplot(aes(training_miles, speed, color = injury))+
+    geom_jitter() + 
+    xlab('training_miles') + 
+    ylab("speed") + 
+    theme_bw()+
+   ggtitle("Variation of speed by training miles and injury")
+plot_speed
+```
+
+> Injury does not seem to be affecting the speed so we will not include it in our model.
+
+```{r}
+# Finally, we will build the mode
+tidy(lm(speed~training_miles,marathon_speed))
+```
+
+Since the p-value under the null hypothesis is 1.074358e-111 , we know that there is a significant association between `training_miles` and the running speed `speed` in the competitions at a significance level of 0.05. So if you want to win the next marathon, you know what you should be doing :)
+
+
