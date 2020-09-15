@@ -1,1 +1,1 @@
-# Using_R_for_office-price
+# How to win a marathon: Linear model with R
