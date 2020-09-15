@@ -1,5 +1,5 @@
 ---
-title: "The faster runner in a Marathon"
+title: "How to win a marathon: Linear model with R"
 output:
   github_document:
     pandoc_args: --webtex

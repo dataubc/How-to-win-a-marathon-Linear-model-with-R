@@ -1,4 +1,4 @@
-The faster runner in a Marathon
+How to win a marathon: Linear model with R
 ================
 
 ![Caption for the picture.](marathon.jpg)
